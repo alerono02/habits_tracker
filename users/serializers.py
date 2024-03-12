@@ -13,12 +13,12 @@ class UserSerializer(serializers.ModelSerializer):
 class UserCreateSerializer(serializers.Serializer):
     '''Сериализатор создания пользователя'''
 
-    email = serializers.EmailField(max_length=80, write_only=True)
+    email = serializers.EmailField(max_length=200, write_only=True)
     password = serializers.CharField(max_length=20, write_only=True)
 
     def save(self, **kwargs):
         user = User(
-            username=self.validated_data['email'],
+            username=self.validated_data['username'],
             is_active=False
         )
         password = self.validated_data['password']
