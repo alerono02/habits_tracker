@@ -35,8 +35,6 @@
 - Redis
 - CORS
 - Swagger
-- Docker
-- Docker Compose
 - Unittest
 
 Установка зависимостей:
