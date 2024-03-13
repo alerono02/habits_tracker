@@ -8,13 +8,13 @@ class PleasureHabitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Habit
-        fields = ('user', 'place', 'time', 'action', 'periodicity', 'time_to_complete', 'is_public', 'link_nice_habit')
+        fields = ('user', 'place', 'time', 'action', 'periodic', 'lead_time', 'is_public', 'associated_habit',)
 
 
 class HabitSerializer(serializers.ModelSerializer):
     '''Привычка'''
 
-    pleasant_habit = PleasureHabitSerializer(source='habit', many=True)
+    pleasant_habit = PleasureHabitSerializer(source='habit_set.all', many=True)
 
     class Meta:
         model = Habit

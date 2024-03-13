@@ -7,7 +7,6 @@ from users.models import User
 
 import datetime
 
-
 '''HABITS TESTS'''
 
 
@@ -29,10 +28,10 @@ class HabitTestCase(APITestCase):
             user=self.user,
             place='В кафе',
             time=datetime.time(minute=20).strftime("%Y-%m-%d %H:%M"),
-            action='Пить кофе',
-            is_nice_habit=True,
-            periodicity=1,
-            time_to_complete=10,
+            action='Слушать музыку',
+            is_good_habit=True,
+            periodic=1,
+            lead_time=10,
             is_public=True
         )
 
@@ -43,9 +42,9 @@ class HabitTestCase(APITestCase):
             'place': 'Дом',
             'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
             'action': 'Пить чай',
-            'is_nice_habit': False,
-            'periodicity': 2,
-            'time_to_complete': 120
+            'is_good_habit': False,
+            'periodic': 2,
+            'lead_time': 120
         }
 
         habit_create_url = reverse('habits:habit_create')
@@ -54,7 +53,6 @@ class HabitTestCase(APITestCase):
         self.assertEqual(
             response.status_code, status.HTTP_201_CREATED,
         )
-        print(response.json())
 
         self.assertEqual(
             response.json().get('action'),
@@ -78,8 +76,6 @@ class HabitTestCase(APITestCase):
             status.HTTP_200_OK
         )
 
-        print(response.json())
-
         self.assertEqual(
             Habit.objects.get(pk=self.habit.pk).action,
             response.json().get('results')[0].get('action'))
@@ -90,7 +86,7 @@ class HabitTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(public_habit_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data.get('count'), 1)
 
     def test_retrieve_habit(self):
         '''Тест READ ONE habit'''
@@ -98,7 +94,6 @@ class HabitTestCase(APITestCase):
         habit_one_url = reverse('habits:habit_one', args=[self.habit.pk])
 
         response = self.client.get(habit_one_url)
-        print(response.json())
 
         self.assertEqual(
             response.status_code, status.HTTP_200_OK,
@@ -107,7 +102,7 @@ class HabitTestCase(APITestCase):
         response = response.json()
 
         self.assertEqual(response.get('user'), self.user.pk)
-        self.assertEqual(response.get('place'), 'В парке')
+        self.assertEqual(response.get('place'), 'В кафе')
         # self.assertEqual(response.get('time'), datetime.time(minute=20).strftime("%Y-%m-%d %H:%M"))
         self.assertEqual(response.get('action'), 'Слушать музыку')
 
@@ -122,8 +117,6 @@ class HabitTestCase(APITestCase):
         habit_update_url = reverse('habits:habit_update', args=[self.habit.pk])
 
         response = self.client.patch(habit_update_url, data)
-
-        print(response.json())
 
         self.assertEqual(
             response.status_code, status.HTTP_200_OK,

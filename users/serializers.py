@@ -7,13 +7,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'telegram_id', 'first_name', 'last_name', 'is_active',)
+        fields = ('id', 'username', 'telegram', 'first_name', 'last_name', 'is_active',)
 
 
 class UserCreateSerializer(serializers.Serializer):
     '''Сериализатор создания пользователя'''
 
-    email = serializers.EmailField(max_length=200, write_only=True)
+    username = serializers.CharField(max_length=200, write_only=True)
     password = serializers.CharField(max_length=20, write_only=True)
 
     def save(self, **kwargs):
@@ -24,6 +24,7 @@ class UserCreateSerializer(serializers.Serializer):
         password = self.validated_data['password']
         user.set_password(password)
         user.save()
+        return message(user)
 
     class Meta:
         model = User

@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
-    'rest-framework',
+    'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
     'django_celery_beat',
@@ -156,17 +156,20 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULE = {
     'user_activity_check': {
         'task': 'users.tasks.telegram_bot_updates',
-        'schedule': timedelta(minutes=10),
+        'schedule': timedelta(minutes=1),
     },
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "https://read-only.example.com",
-    "https://read-and-write.example.com",
+    'http://localhost:8000',
+    'http://10.2.3.16:8000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://read-and-write.example.com",
+    'http://localhost:8000',
+    'http://10.2.3.16:8000',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = False
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')

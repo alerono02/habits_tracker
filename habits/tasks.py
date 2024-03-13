@@ -8,4 +8,4 @@ from users.services import tg_send_message
 def habits_send_telegram(**kwargs):
     """Отправка напоминания о привычке"""
     habit = Habit.objects.get(pk=kwargs['pk'])
-    tg_send_message(habit.owner.tg_user_id, str(habit))
+    tg_send_message(habit.user.telegram, str(habit))
