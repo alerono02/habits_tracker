@@ -6,13 +6,14 @@ from habits.paginators import HabitsPagination
 from habits.serializers import HabitSerializer, HabitCreateSerializer
 
 from habits.models import Habit
+from users.permissions import IsOwner
 
-'''HABITS generics'''
+"""HABITS generics"""
 # ----------------------------------------------------------------
 
 
 class HabitCreateAPIView(generics.CreateAPIView):
-    '''CREATE Habit'''
+    """CREATE Habit"""
     serializer_class = HabitCreateSerializer
     permission_classes = [IsAuthenticated]
 
@@ -23,7 +24,7 @@ class HabitCreateAPIView(generics.CreateAPIView):
 
 
 class HabitListAPIView(generics.ListAPIView):
-    '''READ ALL Habits'''
+    """READ ALL Habits"""
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = HabitsPagination
@@ -33,32 +34,32 @@ class HabitListAPIView(generics.ListAPIView):
 
 
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
-    '''READ ONE Habit'''
+    """READ ONE Habit"""
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsOwner]
 
 
 class HabitUpdateAPIView(generics.UpdateAPIView):
-    '''UPDATE PUT AND PATCH Habits'''
+    """UPDATE PUT AND PATCH Habits"""
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & IsOwner]
 
 
 class HabitDestroyAPIView(generics.DestroyAPIView):
-    '''DELETE Habit'''
+    """DELETE Habit"""
     queryset = Habit.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & IsOwner]
 
 
 
-'''HABITS Public generics'''
+"""HABITS Public generics"""
 # ----------------------------------------------------------------
 
 
 class PublicHabitListAPIView(generics.ListAPIView):
-    '''READ ALL Public Habits'''
+    """READ ALL Public Habits"""
     serializer_class = HabitSerializer
     queryset = Habit.objects.filter(is_public=True)
     permission_classes = [AllowAny]

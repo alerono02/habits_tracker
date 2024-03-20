@@ -5,24 +5,24 @@ from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsOwner, IsModerator
 
 
-'''USER generics'''
+"""USER generics"""
 # ----------------------------------------------------------------
 
 
 class UserCreateAPIView(generics.CreateAPIView):
-    '''CREATE User Регистрация'''
+    """CREATE User (Регистрация)"""
     serializer_class = UserCreateSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
-    '''READ ALL User'''
+    """READ ALL User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsModerator]
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
-    '''READ ONE User'''
+    """READ ONE User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
@@ -30,7 +30,7 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
-    '''UPDATE PUT AND PATCH User'''
+    """UPDATE PUT AND PATCH User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
@@ -38,7 +38,7 @@ class UserUpdateAPIView(generics.UpdateAPIView):
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
-    '''DELETE User'''
+    """DELETE User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
