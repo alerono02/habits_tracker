@@ -3,10 +3,35 @@
 ---
 
 ## Запуск проекта:
-> python manage.py runserver
 
-**Миграции:**
-> python manage.py migrate
+> Запуск Jango проекта через **Run - "название проекта"**
+> или командой **python manage.py runserver** 
+
+### Настройка DRF в Docker
+
+### Сборка без yaml файла
+
+**Сборка докер образа:**
+> docker build -t my-python-app .
+
+**Запуск контейнера:**
+> docker run my-python-app
+
+<br>
+
+### Сборка с yaml файлом
+
+**Cоздание образа из Dockerfile:**
+> docker-compose build
+
+с запуском контейнера:
+> docker-compose up --build
+
+с запуском конктейнера в фоновом режиме:
+> docker-compose up -d --build
+
+**Запуск контейнера:**
+> docker-compose up
 
 ---
 
